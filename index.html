@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <form action="#">
+            <div class="form-group">
+                <label for="expenseAmount">Choose expense amount</label>
+                <input type="number" class="form-control" id="input" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="Email" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Choose a category:</label>
+                <select class="form-control" id="category" name="category">
+                    <option value="food">Food</option>
+                    <option value="electricity">Electricity</option>
+                    <option value="fuel">Fuel</option>
+                    <option value="movie">Movie</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn">Add Expense</button>
+        </form>
+
+        <div id="expensesList"></div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        let btn = document.getElementById('btn');
+        btn.addEventListener('click', function(event) {
+            event.preventDefault();
+            let a = document.getElementById('input').value;
+            let b = document.getElementById('Email').value;
+            let c = document.getElementById('category').value;
+            let d = document.createElement('div');
+            d.setAttribute('class', 'info');
+            d.innerHTML = `<li><p>${a} -- ${b} -- ${c}</p></li>
+                           <button class="btn btn-danger deleteBtn">Delete</button>
+                           <button class="btn btn-primary editBtn">Edit</button>`;
+            document.getElementById('expensesList').appendChild(d);
+
+            const data = {
+                a: a,
+                b: b,
+                c: c
+            };
+            localStorage.setItem('Data', JSON.stringify(data));
+
+            let editBtn = d.querySelector('.editBtn');
+            editBtn.addEventListener('click', function() {
+                d.remove(); // Remove the parent element
+            });
+
+            let deleteBtn = d.querySelector('.deleteBtn');
+            deleteBtn.addEventListener('click', function() {
+                d.remove(); // Remove the parent element
+                localStorage.removeItem('Data');
+            });
+        });
+    </script>
+</body>
+</html>
